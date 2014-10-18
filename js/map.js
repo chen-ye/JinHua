@@ -1,10 +1,15 @@
 var map;
 var markArr = [];
+var fb = new Firebase("https://tankrobot.firebaseio.com/");
 
 function panToPosition(position) {
     var lat = position.coords.latitude;
     var lng = position.coords.longitude;
 
+    panToCoords(lat, long);
+}
+
+function panToCoords(lat, long) {
     for (var marker in markArr) {
         markArr[marker].setMap(null);
     }
@@ -16,7 +21,7 @@ function panToPosition(position) {
     }
 
     var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(lat, lng),
+        position: new google.maps.LatLng(lat, long),
         title: "",
         map: map,
         icon: markerImage
@@ -25,6 +30,21 @@ function panToPosition(position) {
     map.panTo(marker.getPosition());
     markArr.push(marker);
 }
+
+fb.child("location").on("value", function(snapshot) {
+    var loc = eval("[" + snapshot.val()+ "]");
+    // "(47.6577738,-122.3018555)"
+    var lat = loc[0];
+    var long = loc[1];
+  
+    // var position = {coords: {latitude: lat, longitude: long}};
+  
+    //navigator.geolocation.getCurrentPosition(panToPosition);
+    console.log("Updated");
+    console.log(lat);
+    console.log(long);
+    panToCoords(lat, long);
+});
 
 function onPositionUpdate(position) {
     var lat = position.coords.latitude;
@@ -43,11 +63,11 @@ function onPositionUpdate(position) {
     map = new google.maps.Map(document.getElementById("map"), mapOptions);
 }
 
-setInterval(function(e) {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(panToPosition);
-    }
-}, 5000);
+//setInterval(function(e) {
+//    if (navigator.geolocation) {
+//        navigator.geolocation.getCurrentPosition(panToPosition);
+//    }
+//}, 5000);
 
 if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(onPositionUpdate);

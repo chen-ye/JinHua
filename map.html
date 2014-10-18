@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Minimap</title>
+        
+        <style type="text/css">
+            /* Set a size for our map container, the Google Map will take up 100% of this container */
+            #map {
+                width: 512px;
+                height: 512px;
+            }
+        </style>
+        
+        <!-- 
+            You need to include this script on any page that has a Google Map.
+            When using Google Maps on your own site you MUST signup for your own API key at:
+                https://developers.google.com/maps/documentation/javascript/tutorial#api_key
+            After your sign up replace the key in the URL below or paste in the new script tag that Google provides.
+        -->
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdQONknsvTnUDh_MUv_Q3ryYBJmKDceVg&sensor=false"></script>
+        
+        <script type="text/javascript" src="js/map.js">
+        </script>
+    </head>
+    <body>
+        <div id="map"></div>
+    </body>
+</html>
